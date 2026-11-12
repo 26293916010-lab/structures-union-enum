@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* 1. Enumeration with an empty state */
+
 typedef enum {
     TYPE_EMPTY,
     INT,
@@ -11,7 +11,7 @@ typedef enum {
     STRING
 } DataType;
 
-/* Union to store one active value */
+
 typedef union {
     int int_value;
     float float_value;
@@ -19,14 +19,14 @@ typedef union {
     char *string_value;
 } Data;
 
-/* Structure combining type and data */
+
 typedef struct {
     Data data;
     DataType type;
 } Container;
 
 
-/* Function declarations */
+
 
 void container_init(Container *c);
 int container_clear(Container *c);
@@ -48,7 +48,7 @@ int container_copy(Container *destination,
                    const Container *source);
 
 
-/* Validate container state */
+
 static int container_is_valid(const Container *c)
 {
     if (c == NULL)
@@ -70,7 +70,6 @@ static int container_is_valid(const Container *c)
 }
 
 
-/* 2. Initialize container */
 void container_init(Container *c)
 {
     if (c == NULL)
@@ -81,7 +80,7 @@ void container_init(Container *c)
 }
 
 
-/* 3. Clear container safely */
+
 int container_clear(Container *c)
 {
     if (!container_is_valid(c))
@@ -98,7 +97,7 @@ int container_clear(Container *c)
 }
 
 
-/* 4. Set integer */
+
 int container_set_int(Container *c, int value)
 {
     if (!container_clear(c))
@@ -111,7 +110,6 @@ int container_set_int(Container *c, int value)
 }
 
 
-/* Set float */
 int container_set_float(Container *c, float value)
 {
     if (!container_clear(c))
@@ -124,7 +122,7 @@ int container_set_float(Container *c, float value)
 }
 
 
-/* Set character */
+
 int container_set_char(Container *c, char value)
 {
     if (!container_clear(c))
@@ -137,7 +135,7 @@ int container_set_char(Container *c, char value)
 }
 
 
-/* 5. Set string with independent memory allocation */
+
 int container_set_string(Container *c, const char *value)
 {
     char *new_string;
@@ -150,13 +148,13 @@ int container_set_string(Container *c, const char *value)
 
     new_string = malloc(length + 1);
 
-    /* Preserve previous value if allocation fails */
+    
     if (new_string == NULL)
         return 0;
 
     memcpy(new_string, value, length + 1);
 
-    /* Allocate first, then release old value */
+   
     if (!container_clear(c)) {
         free(new_string);
         return 0;
@@ -169,9 +167,8 @@ int container_set_string(Container *c, const char *value)
 }
 
 
-/* 6. Type-safe getters */
 
-/* Get integer */
+
 int container_get_int(const Container *c, int *out_value)
 {
     if (!container_is_valid(c) ||
@@ -183,7 +180,7 @@ int container_get_int(const Container *c, int *out_value)
 }
 
 
-/* Get float */
+
 int container_get_float(const Container *c, float *out_value)
 {
     if (!container_is_valid(c) ||
@@ -195,7 +192,7 @@ int container_get_float(const Container *c, float *out_value)
 }
 
 
-/* Get character */
+
 int container_get_char(const Container *c, char *out_value)
 {
     if (!container_is_valid(c) ||
@@ -207,7 +204,7 @@ int container_get_char(const Container *c, char *out_value)
 }
 
 
-/* Get string */
+
 int container_get_string(const Container *c,
                          const char **out_value)
 {
@@ -220,7 +217,7 @@ int container_get_string(const Container *c,
 }
 
 
-/* 7. Return readable type name */
+
 const char *container_type_name(const Container *c)
 {
     if (!container_is_valid(c))
@@ -237,7 +234,7 @@ const char *container_type_name(const Container *c)
 }
 
 
-/* 8. Print according to active type */
+
 int container_print(const Container *c)
 {
     if (!container_is_valid(c))
@@ -273,7 +270,7 @@ int container_print(const Container *c)
 }
 
 
-/* 9. Deep copy implementation */
+
 int container_copy(Container *destination,
                    const Container *source)
 {
@@ -308,7 +305,7 @@ int container_copy(Container *destination,
         temporary.data = source->data;
     }
 
-    /* Replace destination only after successful copy */
+  
     if (!container_clear(destination)) {
         container_clear(&temporary);
         return 0;
@@ -320,7 +317,7 @@ int container_copy(Container *destination,
 }
 
 
-/* 10. Main demonstration and edge-case testing */
+
 int main(void)
 {
     Container items[6];
@@ -333,7 +330,7 @@ int main(void)
 
     int i;
 
-    /* Initialize every container */
+   
     for (i = 0; i < 6; i++) {
         container_init(&items[i]);
     }
@@ -343,7 +340,7 @@ int main(void)
     printf("===== SAFE CONTAINER LIBRARY =====\n\n");
 
 
-    /* Store mixed data */
+  
     container_set_int(&items[0], 10);
     container_set_float(&items[1], 3.14f);
     container_set_char(&items[2], 'A');
@@ -365,7 +362,7 @@ int main(void)
     }
 
 
-    /* Deep copy demonstration */
+   
     printf("\n===== DEEP COPY TEST =====\n");
 
     if (container_copy(&copied, &items[5])) {
@@ -392,7 +389,7 @@ int main(void)
     }
 
 
-    /* Type transitions */
+   
     printf("\n===== TYPE TRANSITION TEST =====\n");
 
     container_set_string(&items[0], "First String");
@@ -408,7 +405,6 @@ int main(void)
     printf("\n");
 
 
-    /* Integer zero test */
     printf("\n===== ZERO VALUE TEST =====\n");
 
     if (container_get_int(&items[4], &int_value)) {
@@ -417,7 +413,6 @@ int main(void)
     }
 
 
-    /* Wrong type getter test */
     printf("\n===== WRONG TYPE TEST =====\n");
 
     if (!container_get_int(&items[2], &int_value)) {
@@ -425,7 +420,7 @@ int main(void)
     }
 
 
-    /* Empty string test */
+    
     printf("\n===== EMPTY STRING TEST =====\n");
 
     container_set_string(&items[3], "");
@@ -436,7 +431,6 @@ int main(void)
     }
 
 
-    /* Same pointer replacement test */
     printf("\n===== SAME POINTER TEST =====\n");
 
     container_set_string(&items[3], "Same Pointer");
@@ -450,7 +444,7 @@ int main(void)
     }
 
 
-    /* Self-copy test */
+
     printf("\n===== SELF COPY TEST =====\n");
 
     if (container_copy(&items[3], &items[3])) {
@@ -458,7 +452,7 @@ int main(void)
     }
 
 
-    /* Empty container test */
+ 
     printf("\n===== EMPTY CONTAINER TEST =====\n");
 
     container_clear(&items[3]);
@@ -471,7 +465,7 @@ int main(void)
     }
 
 
-    /* Repeated cleanup test */
+
     printf("\n===== REPEATED CLEANUP TEST =====\n");
 
     container_clear(&items[3]);
@@ -480,7 +474,7 @@ int main(void)
     printf("Repeated cleanup completed safely.\n");
 
 
-    /* Final cleanup */
+  
     printf("\n===== FINAL CLEANUP =====\n");
 
     for (i = 0; i < 6; i++) {
@@ -493,27 +487,5 @@ int main(void)
 
     return 0;
 }
-/*
-========================================
-HOW TO COMPILE AND RUN THIS PROGRAM
-========================================
 
-1. Compile using GCC:
-
-   gcc -std=c11 -Wall -Wextra -Wpedantic 10.c -o program
-
-2. Run the program:
-
-   ./program
-
-3. Compile with memory safety checks:
-
-   gcc -std=c11 -Wall -Wextra -g \
-   -fsanitize=address,undefined 10.c -o program
-
-4. Run with memory safety checks:
-
-   ./program
-
-========================================
 */
