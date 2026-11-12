@@ -17,7 +17,7 @@ typedef struct {
     float perimeter;
 } Rectangle;
 
-// Read an integer safely
+
 int read_int(const char *message, int min, int max) {
     char line[100];
     long value;
@@ -45,7 +45,7 @@ int read_int(const char *message, int min, int max) {
     }
 }
 
-// Read a positive finite float
+
 float read_dimension(const char *message) {
     char line[100];
     char *end;
@@ -72,13 +72,13 @@ float read_dimension(const char *message) {
     }
 }
 
-// Calculate area and perimeter
+
 void calculate_geometry(Rectangle *r) {
     r->area = r->width * r->height;
     r->perimeter = 2 * (r->width + r->height);
 }
 
-// Find rectangle by ID
+
 int find_rectangle(Rectangle *r, int count, int id) {
     for (int i = 0; i < count; i++) {
         if (r[i].id == id)
@@ -87,7 +87,7 @@ int find_rectangle(Rectangle *r, int count, int id) {
     return -1;
 }
 
-// Resize array dynamically
+
 int resize_array(Rectangle **r, int *capacity) {
     if (*capacity >= MAX_RECTANGLES) {
         printf("Maximum capacity reached!\n");
@@ -119,7 +119,7 @@ int resize_array(Rectangle **r, int *capacity) {
     return 1;
 }
 
-// Add rectangle
+
 void add_rectangle(Rectangle **r, int *count, int *capacity) {
     if (*count == *capacity) {
         if (!resize_array(r, capacity))
@@ -156,7 +156,7 @@ void add_rectangle(Rectangle **r, int *count, int *capacity) {
     printf("Rectangle added successfully!\n");
 }
 
-// Display all rectangles
+
 void display_all(Rectangle *r, int count) {
     if (count == 0) {
         printf("No rectangles available.\n");
@@ -172,7 +172,6 @@ void display_all(Rectangle *r, int count) {
     }
 }
 
-// Search rectangle
 void search_rectangle(Rectangle *r, int count) {
     int id = read_int("Enter ID to search: ", 1, 2147483647);
 
@@ -190,7 +189,7 @@ void search_rectangle(Rectangle *r, int count) {
     printf("Perimeter: %.2f\n", r[index].perimeter);
 }
 
-// Update rectangle
+
 void update_rectangle(Rectangle *r, int count) {
     int id = read_int("Enter ID to update: ", 1, 2147483647);
 
@@ -218,7 +217,7 @@ void update_rectangle(Rectangle *r, int count) {
     printf("Rectangle updated successfully!\n");
 }
 
-// Delete rectangle
+
 void delete_rectangle(Rectangle *r, int *count) {
     int id = read_int("Enter ID to delete: ", 1, 2147483647);
 
@@ -238,7 +237,7 @@ void delete_rectangle(Rectangle *r, int *count) {
     printf("Rectangle deleted successfully!\n");
 }
 
-// Area analysis
+
 void area_analysis(Rectangle *r, int count) {
     if (count == 0) {
         printf("No rectangles available for analysis.\n");
@@ -269,7 +268,7 @@ void area_analysis(Rectangle *r, int count) {
     printf("Average Area: %.2f\n", total / count);
 }
 
-// Square classification
+
 void classify_rectangles(Rectangle *r, int count) {
     if (count == 0) {
         printf("No rectangles available.\n");
@@ -288,7 +287,7 @@ void classify_rectangles(Rectangle *r, int count) {
     }
 }
 
-// Sort by area in ascending order
+
 void sort_rectangles(Rectangle *r, int count) {
     for (int i = 0; i < count - 1; i++) {
         for (int j = i + 1; j < count; j++) {
@@ -308,7 +307,7 @@ void sort_rectangles(Rectangle *r, int count) {
     display_all(r, count);
 }
 
-// Filter by area
+
 void filter_rectangles(Rectangle *r, int count) {
     float threshold = read_dimension("Enter minimum area threshold: ");
 
