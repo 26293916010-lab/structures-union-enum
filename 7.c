@@ -9,13 +9,12 @@
 #define DESC_SIZE 100
 #define COMMAND_SIZE 32
 
-/* Task status enumeration */
 typedef enum {
     PENDING,
     DONE
 } TaskStatus;
 
-/* Command enumeration */
+
 typedef enum {
     CMD_ADD,
     CMD_DELETE,
@@ -28,7 +27,7 @@ typedef enum {
     CMD_UNKNOWN
 } CommandType;
 
-/* Task structure */
+
 typedef struct {
     int id;
     char description[DESC_SIZE];
@@ -36,7 +35,7 @@ typedef struct {
 } Task;
 
 
-/* Convert command into uppercase */
+
 void convert_uppercase(char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
         str[i] = (char)toupper((unsigned char)str[i]);
@@ -44,7 +43,6 @@ void convert_uppercase(char *str) {
 }
 
 
-/* Convert string into command enumeration */
 CommandType get_command_type(const char *command) {
 
     char temp[COMMAND_SIZE];
@@ -68,7 +66,7 @@ CommandType get_command_type(const char *command) {
 }
 
 
-/* Read a bounded line */
+
 int read_line(const char *prompt, char *buffer, size_t size) {
 
     printf("%s", prompt);
@@ -97,7 +95,7 @@ int read_line(const char *prompt, char *buffer, size_t size) {
 }
 
 
-/* Remove extra spaces */
+
 void trim_spaces(char *str) {
 
     char *start = str;
@@ -115,7 +113,6 @@ void trim_spaces(char *str) {
 }
 
 
-/* Read and validate positive task ID */
 int read_task_id(int *id) {
 
     char input[64];
@@ -146,7 +143,6 @@ int read_task_id(int *id) {
 }
 
 
-/* Read task description */
 int read_description(char *description) {
 
     int result = read_line(
@@ -169,7 +165,7 @@ int read_description(char *description) {
 }
 
 
-/* Find task index by ID */
+
 int find_task_index(Task *tasks, int count, int id) {
 
     for (int i = 0; i < count; i++) {
@@ -182,7 +178,7 @@ int find_task_index(Task *tasks, int count, int id) {
 }
 
 
-/* Display one task */
+
 void display_task(Task task) {
 
     printf("\nTask ID: %d\n", task.id);
@@ -193,7 +189,7 @@ void display_task(Task task) {
 }
 
 
-/* Display all tasks */
+
 void view_tasks(Task *tasks, int count) {
 
     if (count == 0) {
@@ -211,7 +207,7 @@ void view_tasks(Task *tasks, int count) {
 }
 
 
-/* Add a task */
+
 int add_task(Task **tasks, int *count, size_t *capacity) {
 
     int id;
@@ -232,7 +228,7 @@ int add_task(Task **tasks, int *count, size_t *capacity) {
     if (result == 0) return 0;
     if (result == -1) return 1;
 
-    /* Increase capacity when required */
+
     if ((size_t)*count == *capacity) {
 
         size_t new_capacity = (*capacity == 0) ? 2 : *capacity * 2;
@@ -272,7 +268,6 @@ int add_task(Task **tasks, int *count, size_t *capacity) {
 }
 
 
-/* Delete a task */
 int delete_task(Task *tasks, int *count) {
 
     int id;
@@ -301,7 +296,6 @@ int delete_task(Task *tasks, int *count) {
 }
 
 
-/* Update task description */
 int update_task(Task *tasks, int count) {
 
     int id;
@@ -332,7 +326,6 @@ int update_task(Task *tasks, int count) {
 }
 
 
-/* Mark task as completed */
 int complete_task(Task *tasks, int count) {
 
     int id;
@@ -362,7 +355,7 @@ int complete_task(Task *tasks, int count) {
 }
 
 
-/* Search task by ID */
+
 int search_task(Task *tasks, int count) {
 
     int id;
@@ -386,7 +379,7 @@ int search_task(Task *tasks, int count) {
 }
 
 
-/* Display help */
+
 void show_help(void) {
 
     printf("\n========== AVAILABLE COMMANDS ==========\n");
@@ -402,7 +395,6 @@ void show_help(void) {
 }
 
 
-/* Main function */
 int main() {
 
     Task *tasks = NULL;
