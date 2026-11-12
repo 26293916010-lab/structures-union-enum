@@ -13,7 +13,7 @@ typedef struct {
     float gpa;
 } Student;
 
-// Read an integer safely
+
 int read_int(const char *message, int min, int max) {
     char input[100];
     long value;
@@ -40,7 +40,7 @@ int read_int(const char *message, int min, int max) {
     }
 }
 
-// Read GPA safely
+
 float read_gpa(void) {
     char input[100];
     char *end;
@@ -67,7 +67,7 @@ float read_gpa(void) {
     }
 }
 
-// Read student name
+
 void read_name(char name[]) {
     char input[256];
 
@@ -101,7 +101,7 @@ void read_name(char name[]) {
     }
 }
 
-// Create student list dynamically
+
 Student *create_student_list(int capacity) {
     if (capacity <= 0 ||
         (size_t)capacity > SIZE_MAX / sizeof(Student))
@@ -110,7 +110,6 @@ Student *create_student_list(int capacity) {
     return malloc((size_t)capacity * sizeof(Student));
 }
 
-// Find student by roll number
 int find_student(Student *students, int count, int roll) {
     for (int i = 0; i < count; i++) {
         if (students[i].roll == roll)
@@ -119,13 +118,13 @@ int find_student(Student *students, int count, int roll) {
     return -1;
 }
 
-// Display one student
+
 void display_one(Student s) {
     printf("Roll Number: %d | Name: %s | Age: %d | GPA: %.2f\n",
            s.roll, s.name, s.age, s.gpa);
 }
 
-// Display all students
+
 void display_students(Student *students, int count) {
     if (count == 0) {
         printf("\nNo student records available.\n");
@@ -139,7 +138,7 @@ void display_students(Student *students, int count) {
     }
 }
 
-// Add student
+
 void add_student(Student **students, int *count, int *capacity) {
     if (*count == INT_MAX) {
         printf("Maximum number of records reached.\n");
@@ -161,7 +160,7 @@ void add_student(Student **students, int *count, int *capacity) {
     new_student.age = read_int("Enter age (16-100): ", 16, 100);
     new_student.gpa = read_gpa();
 
-    // Increase capacity when array becomes full
+    
     if (*count == *capacity) {
         if (*capacity > INT_MAX / 2) {
             printf("Cannot increase array capacity further.\n");
@@ -195,7 +194,6 @@ void add_student(Student **students, int *count, int *capacity) {
     printf("Student added successfully!\n");
 }
 
-// Search student
 void search_student(Student *students, int count) {
     int roll = read_int("Enter roll number to search: ", 1, INT_MAX);
 
@@ -209,7 +207,6 @@ void search_student(Student *students, int count) {
     }
 }
 
-// Update student
 void update_student(Student *students, int count) {
     int roll = read_int("Enter roll number to update: ", 1, INT_MAX);
 
@@ -229,7 +226,7 @@ void update_student(Student *students, int count) {
     printf("Student updated successfully!\n");
 }
 
-// Delete student
+
 void delete_student(Student *students, int *count) {
     int roll = read_int("Enter roll number to delete: ", 1, INT_MAX);
 
@@ -240,7 +237,7 @@ void delete_student(Student *students, int *count) {
         return;
     }
 
-    // Shift remaining records to the left
+
     for (int i = index; i < *count - 1; i++) {
         students[i] = students[i + 1];
     }
@@ -250,7 +247,7 @@ void delete_student(Student *students, int *count) {
     printf("Student deleted successfully!\n");
 }
 
-// Display GPA summary
+
 void gpa_summary(Student *students, int count) {
     if (count == 0) {
         printf("No records available for GPA analysis.\n");
@@ -282,7 +279,7 @@ void gpa_summary(Student *students, int count) {
     printf("\nAverage GPA: %.2f\n", total / count);
 }
 
-// Sort students by GPA in descending order
+
 void sort_students(Student *students, int count) {
     if (count == 0) {
         printf("No records available for sorting.\n");
