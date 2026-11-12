@@ -4,41 +4,41 @@
 #include <stddef.h>
 #include <math.h>
 
-/* Union declaration */
+
 typedef union {
     int i;
     float f;
     char str[20];
 } UnionData;
 
-/* Structure declaration */
+
 typedef struct {
     int i;
     float f;
     char str[20];
 } StructData;
 
-/* Enumeration to identify active union member */
+
 typedef enum {
     VALUE_INT,
     VALUE_FLOAT,
     VALUE_TEXT
 } ValueType;
 
-/* Tagged union structure */
+
 typedef struct {
     UnionData value;
     ValueType type;
 } TaggedRecord;
 
 
-/* Function to set integer */
+
 void set_integer(TaggedRecord *record, int value) {
     record->value.i = value;
     record->type = VALUE_INT;
 }
 
-/* Function to set float */
+
 void set_float(TaggedRecord *record, float value) {
     if (!isfinite(value)) {
         printf("Invalid float value!\n");
@@ -49,7 +49,7 @@ void set_float(TaggedRecord *record, float value) {
     record->type = VALUE_FLOAT;
 }
 
-/* Function to set string */
+
 int set_text(TaggedRecord *record, const char *text) {
     if (strlen(text) >= sizeof(record->value.str)) {
         printf("String too long! Maximum 19 characters allowed.\n");
@@ -61,7 +61,7 @@ int set_text(TaggedRecord *record, const char *text) {
     return 1;
 }
 
-/* Function to display active union member safely */
+
 void display_record(TaggedRecord record) {
     switch (record.type) {
 
@@ -83,7 +83,7 @@ void display_record(TaggedRecord record) {
 }
 
 
-/* Main function */
+
 int main() {
 
     UnionData udata;
@@ -91,12 +91,12 @@ int main() {
 
     printf("===== STRUCTURE AND UNION MEMORY ANALYSIS =====\n\n");
 
-    /* Structure values */
+  
     sdata.i = 10;
     sdata.f = 220.5;
     strcpy(sdata.str, "Struct Programming");
 
-    /* Union values: one member at a time */
+
     udata.i = 10;
     printf("Union Integer: %d\n", udata.i);
 
@@ -107,7 +107,7 @@ int main() {
     printf("Union Float: %.2f\n", udata.f);
 
 
-    /* Memory addresses of union members */
+   
     printf("\n===== UNION MEMBER ADDRESSES =====\n");
 
     printf("Address of integer: %p\n", (void *)&udata.i);
@@ -115,7 +115,7 @@ int main() {
     printf("Address of string:  %p\n", (void *)udata.str);
 
 
-    /* Memory addresses of structure members */
+  
     printf("\n===== STRUCTURE MEMBER ADDRESSES =====\n");
 
     printf("Address of integer: %p\n", (void *)&sdata.i);
@@ -123,21 +123,21 @@ int main() {
     printf("Address of string:  %p\n", (void *)sdata.str);
 
 
-    /* Size comparison */
+
     printf("\n===== SIZE COMPARISON =====\n");
 
     printf("Size of UnionData: %zu bytes\n", sizeof(UnionData));
     printf("Size of StructData: %zu bytes\n", sizeof(StructData));
 
 
-    /* Alignment comparison */
+   
     printf("\n===== ALIGNMENT =====\n");
 
     printf("Union alignment: %zu bytes\n", _Alignof(UnionData));
     printf("Structure alignment: %zu bytes\n", _Alignof(StructData));
 
 
-    /* Structure field offsets */
+    
     printf("\n===== STRUCTURE FIELD OFFSETS =====\n");
 
     printf("Offset of integer: %zu\n", offsetof(StructData, i));
@@ -145,7 +145,6 @@ int main() {
     printf("Offset of string:  %zu\n", offsetof(StructData, str));
 
 
-    /* Memory required for 100 records */
     printf("\n===== MEMORY FOR 100 RECORDS =====\n");
 
     printf("100 Union records: %zu bytes\n",
@@ -155,7 +154,6 @@ int main() {
            100 * sizeof(StructData));
 
 
-    /* Tagged union records */
     printf("\n===== TAGGED UNION RECORDS =====\n");
 
     TaggedRecord records[5];
@@ -172,7 +170,6 @@ int main() {
     }
 
 
-    /* Maximum length string test */
     printf("\n===== STRING VALIDATION =====\n");
 
     TaggedRecord test;
@@ -185,7 +182,7 @@ int main() {
     set_text(&test, "This string is too long");
 
 
-    /* Tagged union memory comparison */
+
     printf("\n===== TAGGED RECORD SIZE =====\n");
 
     printf("Plain Union size: %zu bytes\n", sizeof(UnionData));
